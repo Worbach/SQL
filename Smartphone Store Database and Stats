@@ -1,0 +1,21 @@
+-- Create a smartphone store database
+
+CREATE TABLE Phones (id INTEGER PRIMARY KEY, item TEXT, price INTEGER, OS TEXT, condition TEXT);
+
+INSERT INTO Phones VALUES (1, "iPhone 14", 1000, "IOS", "New");
+INSERT INTO Phones VALUES (2, "Samsung Galaxy S23", 900, "Android", "New");
+INSERT INTO Phones VALUES (3, "iPhone 13 Pro Max", 400, "IOS", "Used");
+INSERT INTO Phones VALUES (4, "Samsung Galaxy Note 10", 150, "Android", "Used");
+INSERT INTO Phones VALUES (5, "iPhone 7", 50, "IOS", "Used");
+
+-- Display all phones that are in stock in the store
+SELECT * FROM phones;
+
+-- Display all iphones' prices from highest price to lowest
+SELECT * FROM Phones WHERE OS = "IOS" Order BY price DESC;
+
+-- Display the overall cost of all newer phones
+SELECT SUM(price) FROM Phones WHERE condition = "New";
+
+-- Display the average price of used iPhones
+SELECT AVG(price) FROM Phones WHERE OS = "IOS" AND condition = "Used";
