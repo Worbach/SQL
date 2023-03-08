@@ -1,0 +1,82 @@
+/*
+    This project answers questions based on information of famous movie action stars from different tables and merges them into one clean readable list.
+    
+    This project's dataset was hand-picked using the IMDB profiles of each movie star. I've linked their profiles below for reference.
+Jackie Chan - https://www.imdb.com/name/nm0000329/
+Scarlett Johansson - https://www.imdb.com/name/nm0424060/
+Tom Holland - https://www.imdb.com/name/nm4043618/
+Jet Li - https://www.imdb.com/name/nm0001472/
+Chuck Norris - https://www.imdb.com/name/nm0001569/
+Sylvester Stallone - https://www.imdb.com/name/nm0000230/ 
+Bruce Lee - https://www.imdb.com/name/nm0000045/
+Arnold Schwarzenegger - https://www.imdb.com/name/nm0000216/
+Michelle Yeoh - https://www.imdb.com/name/nm0000706/
+*/
+
+CREATE TABLE famous_people (id INTEGER PRIMARY KEY, full_name TEXT, location TEXT, age INTEGER, years_in_show_biz INTEGER);
+
+INSERT INTO famous_people (full_name, location, age, years_in_show_biz) VALUES ("Jackie Chan", "China", 68, 61);
+INSERT INTO famous_people (full_name, location, age, years_in_show_biz) VALUES ("Scarlett Johansson", "USA", 38, 29);
+INSERT INTO famous_people (full_name, location, age, years_in_show_biz) VALUES ("Tom Holland", "England", 26, 13);
+INSERT INTO famous_people (full_name, location, age, years_in_show_biz) VALUES ("Jet Li", "China", 41, 59);
+INSERT INTO famous_people (full_name, location, age, years_in_show_biz) VALUES ("Chuck Norris", "USA", 82, 55);
+INSERT INTO famous_people (full_name, location, age, years_in_show_biz) VALUES ("Sylvester Stallone", "USA", 76, 54 ); 
+INSERT INTO famous_people (full_name, location, age, years_in_show_biz) VALUES ("Bruce Lee", "China", 33, 32);
+INSERT INTO famous_people (full_name, location, age, years_in_show_biz) VALUES ("Arnold Schwarzenegger", "Austria", 75, 53);
+INSERT INTO famous_people (full_name, location, age, years_in_show_biz) VALUES ("Michelle Yeoh", "Malaysia", 60, 39);
+
+CREATE TABLE action_movies (id INTEGER PRIMARY KEY, genre_id INTEGER, movie_title TEXT, movie_star1 INTEGER, movie_star2 INTEGER, action_genre TEXT);
+
+INSERT INTO action_movies (genre_id, movie_title, movie_star1,  movie_star2, action_genre) VALUES (1, "Fist of Fury", 1, 7, "Kung-Fu");
+INSERT INTO action_movies (genre_id, movie_title, movie_star1,  movie_star2, action_genre) VALUES (1, "The Forbidden Kingdom", 1, 4, "Kung-Fu");
+INSERT INTO action_movies (genre_id, movie_title, movie_star1, movie_star2, action_genre) VALUES (2, "Supercop 2", 1, 9, "Crime");
+INSERT INTO action_movies (genre_id, movie_title, movie_star1, movie_star2, action_genre) VALUES (3, "Avengers: Endgame", 2, 3, "Superhero");
+INSERT INTO action_movies (genre_id, movie_title, movie_star1, movie_star2, action_genre) VALUES (1, "Fearless", 4, 9, "Kung-Fu");
+INSERT INTO action_movies (genre_id, movie_title, movie_star1, movie_star2, action_genre) VALUES (3, "Avengers: Infinity War", 2, 3, "Superhero");
+INSERT INTO action_movies (genre_id, movie_title, movie_star1, movie_star2, action_genre) VALUES (1, "The Way Of The Dragon", 5, 7, "Kung-Fu");
+INSERT INTO action_movies (genre_id, movie_title, movie_star1, movie_star2, action_genre) VALUES (4, "The Expendables 2", 6, 8, "Thriller");
+INSERT INTO action_movies (genre_id, movie_title, movie_star1,  movie_star2, action_genre) VALUES (4, "The Expendables 3", 6, 5, "Thriller");
+
+
+CREATE TABLE same_movie (id INTEGER PRIMARY KEY, movie_name TEXT, actor1_id INTEGER, actor2_id INTEGER);
+
+
+INSERT INTO same_movie (movie_name, actor1_id, actor2_id) VALUES ("Fist of Fury", 1, 7);
+INSERT INTO same_movie (movie_name, actor1_id, actor2_id) VALUES ("The Forbidden Kingdom", 1, 4);
+INSERT INTO same_movie (movie_name, actor1_id, actor2_id) VALUES ("Supercop 2", 1, 9);
+INSERT INTO same_movie (movie_name, actor1_id, actor2_id) VALUES ("Avengers: Endgame", 2, 3);
+INSERT INTO same_movie (movie_name, actor1_id, actor2_id) VALUES ("Fearless", 4, 9);
+INSERT INTO same_movie (movie_name, actor1_id, actor2_id) VALUES 
+("Avengers: Infinity War", 2, 3);
+INSERT INTO same_movie (movie_name, actor1_id, actor2_id) VALUES ("The Way Of The Dragon", 5, 7);
+INSERT INTO same_movie (movie_name, actor1_id, actor2_id) VALUES ("The Expendables 2", 6, 8);
+INSERT INTO same_movie (movie_name, actor1_id, actor2_id) VALUES ("The Expendables 3", 6, 5);
+
+
+-- Which kung-fu movies were made in America?
+SELECT movie_title, action_genre, a.location
+FROM action_movies
+    JOIN famous_people a
+        ON a.id = action_movies.movie_star1
+    JOIN famous_people b
+        ON b.id = action_movies.movie_star2
+        WHERE a.location IN ("USA") AND action_genre IN ("Kung-Fu");
+        
+
+-- Which stars worked on the same movies together?
+SELECT movie_name, a.full_name AS star_1, b.full_name AS star_2 
+FROM same_movie
+    JOIN famous_people a
+        ON a.id = same_movie.actor1_id
+    JOIN famous_people b
+        ON b.id = same_movie.actor2_id;
+    
+-- What movies did Scarlett Johansson & Tom Holland star in?
+SELECT movie_name, a.full_name AS star_1, b.full_name AS star_2 
+FROM same_movie
+    JOIN famous_people a
+        ON a.id = same_movie.actor1_id
+    JOIN famous_people b
+        ON b.id = same_movie.actor2_id
+    WHERE a.full_name IN ("Scarlett Johansson", "Tom Holland");
+    
