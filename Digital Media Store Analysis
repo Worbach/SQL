@@ -48,7 +48,8 @@ SELECT emp.FirstName AS Rep_First_Name,
 emp.LastName AS Rep_Last_Name, 
 cust.FirstName AS Cust_First_Name, 
 cust.LastName AS Cust_Last_Name, 
-inv.total
+inv.total,
+cust.Country AS Country
 FROM chinook.employees emp
 JOIN chinook.Customers cust ON cust.CustomerId = emp.EmployeeId
 JOIN chinook.invoices inv ON cust.CustomerId = inv.InvoiceId;
