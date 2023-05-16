@@ -1,7 +1,7 @@
 /* 
 In this project, I worked with a dataset called chinook, which represents a digital media store and includes tables for artists, albums, media tracks, invoices, and customers.
 
-Referencing this database, I came up with 15 anaalytical based questions to solve using SQL in the SQLite Studio program.
+Referencing this database, I came up with 15 analytical based questions to solve using SQL in the SQLite Studio program.
 */
  
 -- #1 Show Customers (their full names, customer ID, and country) who are not in the US.
